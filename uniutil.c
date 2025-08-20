@@ -87,7 +87,11 @@ unibi_term *unibi_from_file(const char *file) {
     int fd;
     unibi_term *ut;
 
-    if ((fd = open(file, O_RDONLY)) < 0) {
+    int flags = O_RDONLY;
+#ifdef MSWIN
+    flags |= O_BINARY;
+#endif
+    if ((fd = open(file, flags)) < 0) {
         return NULL;
     }
 
